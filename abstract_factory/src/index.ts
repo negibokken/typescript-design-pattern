@@ -34,6 +34,8 @@ class HotPot {
 }
 
 abstract class Factory {
+  // 例だとJavaの動的に特定のクラスのインスタンスを生成する技法を使ってた
+  // (Factory)Class.forName(classname).newInstance();
   abstract getSoup(): Soup;
   abstract getMain(): Protein;
 }
