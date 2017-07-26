@@ -5,18 +5,21 @@
 // そうすると、不都合なのが、NormalCarクラスの中で Tireクラスを使うときに、BycycleTire, F1Tire どっちもはめられる
 // なので、車はこの部品はNormalCar工場から使うようにしておけばBycycleTireが出てきたりしなくなる
 // (改めて勉強してて思ったけど、NromalCar インスタンスを返す工場があってもよさそう)
+// 組み合わせを決めるのが大事
 
-class Pot {}
+abstract class Pot {
+  protected soup: Soup;
+  protected protein: Protein;
+  // public void addSoup(Soup soup)
+  abstract addSoup(soup: Soup): void;
+  // public void addMain(Protein protein)
+  abstract addMain(protein: Protein): void;
+}
+
 class Soup {}
 class Protein {}
 
-class HotPot {
-  private pot: Pot;
-  private soup: Soup;
-  private protein: Protein;
-  constructor(pot: Pot) {
-    this.pot = pot;
-  }
+class HotPot extends Pot {
   // public void addSoup(Soup soup)
   addSoup(soup: Soup): void {
     // JS は特殊なので this を使うけど他の言語の人は違うので注意
@@ -25,6 +28,9 @@ class HotPot {
   // public void addMain(Protein protein)
   addMain(protein: Protein): void {
     this.protein = protein;
+  }
+  addYogan(): void {
+    console.log('hello');
   }
 }
 
@@ -48,9 +54,12 @@ class MizutakiFactory extends Factory {
 class Main {
   main(): void {
     let factory: MizutakiFactory = new MizutakiFactory();
-    let hotPot: HotPot = new HotPot(new Pot());
+    // let factory: ChankokFactory = new MizutakiFactory();
+    let hotPot: Pot = new HotPot();
     hotPot.addSoup(factory.getSoup());
     hotPot.addMain(factory.getMain());
+    let h: HotPot = <HotPot>hotPot;
+    h.addYogan();
   }
 }
 
